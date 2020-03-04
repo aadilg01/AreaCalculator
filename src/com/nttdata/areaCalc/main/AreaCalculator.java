@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class AreaCalculator {
 	
@@ -115,13 +117,25 @@ public class AreaCalculator {
 		txtrHeightInMetres_1.setBounds(218, 273, 139, 26);
 		frmAreaCalculator.getContentPane().add(txtrHeightInMetres_1);
 		
+		//create error label
+		JLabel errorLabel = new JLabel(" ");
+		errorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		errorLabel.setBounds(38, 159, 319, 20);
+		frmAreaCalculator.getContentPane().add(errorLabel);
+		
 		//create button to calculate area show answer
 		JButton btnCalculate = new JButton("Submit");
 		btnCalculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//store height and width data
+				try {
 				height = Double.parseDouble(textField_Height.getText());
 				width = Double.parseDouble(textField_Width.getText());
+				}catch (Exception e1) {
+					textField_Height.setText(null);
+					textField_Width.setText(null);
+					errorLabel.setText("Please input numbers only.");
+				}
 				//calculate area in feet
 				double result = height * width;
 				//convert to metres
@@ -136,5 +150,7 @@ public class AreaCalculator {
 		});
 		btnCalculate.setBounds(242, 183, 115, 29);
 		frmAreaCalculator.getContentPane().add(btnCalculate);
+		
+		
 	}
 }
