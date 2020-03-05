@@ -96,20 +96,41 @@ public void initialize() {
 				//create varaibles to store input
 				double height = 0;
 				double width = 0; 
+				boolean calculateh = false;
+				boolean calculatew = false;
+				
+				String error1 = "";
+				String error2 = "";
+				
 				//store height and width data
 				try {
-				
-
 				height = Double.parseDouble(textField_Height.getText());
-				width = Double.parseDouble(textField_Width.getText());
-				errorLabel.setText("See results below");
+				calculateh = true;
 				}catch (Exception e1) {
+					calculateh = false;
 					textField_Height.setText(null);
-					textField_Width.setText(null);
-					errorLabel.setText("Please input numbers only.");
+					error1 = "height";
 					txtrHeightInFeet_1.setText("0");
 					txtrHeightInMetres_1.setText("0");
+					errorLabel.setText("Please input value for " + error1 + " " + error2);
+					
 				}
+				
+				try {
+				width = Double.parseDouble(textField_Width.getText());
+				calculatew = true;
+					}catch (Exception e1) {
+						calculatew = false;
+						textField_Width.setText(null);
+						error2 = "width";
+						txtrHeightInFeet_1.setText("0");
+						txtrHeightInMetres_1.setText("0");
+						errorLabel.setText("Please input value for " + error1 + " " + error2);
+					}
+								
+				
+				
+				if (calculateh && calculatew) {
 				//calculate area in feet
 				double result = height * width;
 				System.out.println(height + "   " + width);
@@ -122,6 +143,9 @@ public void initialize() {
 				//set value of text areas as value of area.
 				txtrHeightInFeet_1.setText(ans);
 				txtrHeightInMetres_1.setText(ansInMetres);
+				//set error label to show success
+				errorLabel.setText("Calculation Successful.");
+				}
 			}
 		});
 		btnCalculate.setBounds(242, 183, 115, 29);
